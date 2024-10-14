@@ -182,6 +182,8 @@
             <br>
             <br>
 
+
+
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <h3>
@@ -193,30 +195,34 @@
                         methods and scenes!
                     </p>
 
+
+
+
                     <div id="single-image-compare">
                         <div class="row m-2">
                             <div class="col-md-10">
                                 <ul class="nav nav-pills justify-content-center" role="navigation">
                                     <li class="nav-item">
                                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-                                            style="width: 110px"><strong>Comparison method:</strong></a>
+                                            style="width: 110px"><strong>Reconstrucion method:</strong></a>
                                     </li>
                                     <li class="nav-item method-pill" data-value="method-3dgs"><a class="nav-link active">3DGS <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
                                     <li class="nav-item method-pill" data-value="mipgs"><a class="nav-link">Mip-Splatting <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
                                     <li class="nav-item method-pill" data-value="method-3dgs-vae"><a class="nav-link">3DGS-VAE <span style="font-size: 10px;"><br>(Latent Space)</span></a> </li>
-                                    <li class="nav-item method-pill" data-value="zipnerf"><a class="nav-link">Latent-NeRF <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
-                                    <li class="nav-item method-pill" data-value="reconfusion"><a class="nav-link">Feature-3DGS <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                                    <li class="nav-item method-pill" data-value="latent-nerf"><a class="nav-link">Latent-NeRF (Recon) <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                                    <li class="nav-item method-pill" data-value="feature_gs"><a class="nav-link">Feature-3DGS <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                                </ul>
+                                <ul class="nav nav-pills justify-content-center" role="navigation">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+                                            style="width: 110px"><strong>Generation method:</strong></a>
+                                    </li>
+                                    <li class="nav-item method-pill" data-value="dreamfusion"><a class="nav-link">DreamFusion <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
+                                    <li class="nav-item method-pill" data-value="latent-nerf_"><a class="nav-link">Latent-NeRF (Gene) <span style="font-size: 10px;"><br>(Latent Space)</span></a></li></ul>
+
                                 </ul>
                             </div>
 
-<!--                            <div class="btn-group btn-group-sm col-md-2 d-flex align-items-center" style="padding-top: 5px" id="mode-buttons">-->
-<!--                                <button class="btn btn-primary mode-pill float-right active" data-value="rgb">-->
-<!--                                    RGB-->
-<!--                                </button>-->
-<!--                                <button class="btn btn-primary mode-pill float-right" data-value="depth">-->
-<!--                                    Depth-->
-<!--                                </button>-->
-<!--                            </div>-->
                         </div>
 
                         <div class="video-container container position-relative p-0">
@@ -362,7 +368,7 @@
 
                         </div>
 
-                        <div class="pill-row scene-pills" id="zipnerf-pills" role="group" aria-relevant="additions text">
+                        <div class="pill-row scene-pills" id="latent-nerf-pills" role="group" aria-relevant="additions text">
                             <div class="pill scene-pill" data-value="tingzi">
                                 <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
                             </div>
@@ -426,126 +432,68 @@
   
                         </div>
 
-                        <div class="pill-row scene-pills" id="reconfusion-pills" role="group" aria-relevant="additions text">
-                            <div class="pill scene-pill" data-value="bicycle">
-                                <img class="card-img" src="thumbnails/reconfusion/bicycle.png">
+                        <div class="pill-row scene-pills" id="feature_gs-pills" role="group" aria-relevant="additions text">
+                            <div class="pill scene-pill" data-value="tingzi">
+                                <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
                             </div>
-
-                            <div class="pill scene-pill" data-value="bonsai">
-                                <img class="card-img" src="thumbnails/reconfusion/bonsai.png">
+                            <div class="pill scene-pill" data-value="chaoshi">
+                                <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
                             </div>
-
-                            <div class="pill scene-pill" data-value="counter">
-                                <img class="card-img" src="thumbnails/reconfusion/counter.png">
+                            <div class="pill scene-pill" data-value="shibei">
+                                <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
                             </div>
-
+                            <div class="pill scene-pill" data-value="tiantai">
+                                <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="baiqiang">
+                                <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="fern">
+                                <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                            </div>
                             <div class="pill scene-pill" data-value="flowers">
-                                <img class="card-img" src="thumbnails/reconfusion/flowers.png">
+                                <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
                             </div>
-
-                            <div class="pill scene-pill" data-value="garden">
-                                <img class="card-img" src="thumbnails/reconfusion/garden.png">
+                            <div class="pill scene-pill" data-value="fortress">
+                                <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
                             </div>
-
+                            <div class="pill scene-pill" data-value="horns">
+                                <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="leaves">
+                                <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="bicycle">
+                                <img class="card-img" src="thumbnails/method-3dgs/bicycle.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="bonsai">
+                                <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                            </div>
                             <div class="pill scene-pill" data-value="kitchen">
-                                <img class="card-img" src="thumbnails/reconfusion/kitchen.png">
+                                <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="counter">
+                                <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="garden">
+                                <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="0000acae">
+                                <img class="card-img" src="thumbnails/method-3dgs/0000acae.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="0000c3b1">
+                                <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="00000ffa">
+                                <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="00005ee0">
+                                <img class="card-img" src="thumbnails/method-3dgs/00005ee0.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="0001051b">
+                                <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
                             </div>
 
-                            <div class="pill scene-pill" data-value="room">
-                                <img class="card-img" src="thumbnails/reconfusion/room.png">
-                            </div>
-
-                            <div class="pill scene-pill" data-value="stump">
-                                <img class="card-img" src="thumbnails/reconfusion/stump.png">
-                            </div>
-
-                            <div class="pill scene-pill" data-value="treehill">
-                                <img class="card-img" src="thumbnails/reconfusion/treehill.png">
-                            </div>
-
-                            <div class="pill scene-pill" data-value="co3d_apple_110_13051_23361">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_apple_110_13051_23361.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_ball_123_14352_28341">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_ball_123_14352_28341.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_bench_167_18175_33897">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_bench_167_18175_33897.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_bench_185_19987_38634">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_bench_185_19987_38634.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_cake_201_21631_44304">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_cake_201_21631_44304.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_donut_198_21296_42378">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_donut_198_21296_42378.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_donut_290_30761_58510">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_donut_290_30761_58510.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_hydrant_134_15451_31119">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_hydrant_134_15451_31119.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_hydrant_147_16374_32167">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_hydrant_147_16374_32167.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_plant_188_20319_36755">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_plant_188_20319_36755.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_plant_188_20360_39345">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_plant_188_20360_39345.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_suitcase_197_21239_42788">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_suitcase_197_21239_42788.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_suitcase_247_26503_52258">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_suitcase_247_26503_52258.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_teddybear_118_13848_27594">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_teddybear_118_13848_27594.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_teddybear_159_17485_33236">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_teddybear_159_17485_33236.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_vase_101_11754_20739">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_vase_101_11754_20739.png">
-                            </div>  
-  
-
-                            <div class="pill scene-pill" data-value="co3d_vase_118_13872_29491">
-                                <img class="card-img" src="thumbnails/reconfusion/co3d_vase_118_13872_29491.png">
-                            </div>  
   
                         </div>
 
@@ -611,31 +559,112 @@
                                 <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
                             </div>
                         </div>
+
+                        <div class="pill-row scene-pills" id="dreamfusion-pills" role="group" aria-relevant="additions text">
+                            <div class="pill scene-pill" data-value="1">
+                                <img class="card-img" src="thumbnails/dreamfusion/1.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="2">
+                                <img class="card-img" src="thumbnails/dreamfusion/2.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="3">
+                                <img class="card-img" src="thumbnails/dreamfusion/3.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="4">
+                                <img class="card-img" src="thumbnails/dreamfusion/4.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="5">
+                                <img class="card-img" src="thumbnails/dreamfusion/5.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="6">
+                                <img class="card-img" src="thumbnails/dreamfusion/6.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="7">
+                                <img class="card-img" src="thumbnails/dreamfusion/7.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="8">
+                                <img class="card-img" src="thumbnails/dreamfusion/8.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="9">
+                                <img class="card-img" src="thumbnails/dreamfusion/9.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="10">
+                                <img class="card-img" src="thumbnails/dreamfusion/10.png">
+                            </div>
+
+
+
+                        </div>
+                        <div class="pill-row scene-pills" id="latent-nerf_-pills" role="group" aria-relevant="additions text">
+                            <div class="pill scene-pill" data-value="1">
+                                <img class="card-img" src="thumbnails/latent-nerf_/1.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="2">
+                                <img class="card-img" src="thumbnails/latent-nerf_/2.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="3">
+                                <img class="card-img" src="thumbnails/latent-nerf_/3.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="4">
+                                <img class="card-img" src="thumbnails/latent-nerf_/4.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="5">
+                                <img class="card-img" src="thumbnails/latent-nerf_/5.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="6">
+                                <img class="card-img" src="thumbnails/latent-nerf_/6.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="7">
+                                <img class="card-img" src="thumbnails/latent-nerf_/7.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="8">
+                                <img class="card-img" src="thumbnails/latent-nerf_/8.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="9">
+                                <img class="card-img" src="thumbnails/latent-nerf_/9.png">
+                            </div>
+                            <div class="pill scene-pill" data-value="10">
+                                <img class="card-img" src="thumbnails/latent-nerf_/10.png">
+                            </div>
+
+
+
+                        </div>
                     </div>
+
+
+
+
 
                     <script>
                         playbackSpeeds = {
                             "method-3dgs": [1.0, 1.0],
                             "mipgs": [1.0, 1.0],
-                            "zipnerf": [1.0, 1.0],
-                            "reconfusion": [1.0, 1.0],
+                            "latent-nerf": [1.0, 1.0],
+                            "feature_gs": [1.0, 1.0],
                             "method-3dgs-vae": [1.0, 1.0],
+                            "latent-nerf_": [1.0, 1.0],
+                            "dreamfusion": [1.0, 1.0],
                         };
 
                         aspectRatios = {
                             "method-3dgs": 1.0,
-                            "mipgs": 1.5,
-                            "zipnerf": 1.5,
-                            "reconfusion": 1.5,
+                            "mipgs": 1.0,
+                            "latent-nerf": 1.0,
+                            "feature_gs": 1.0,
                             "method-3dgs-vae": 1.0,
+                            "latent-nerf_": 1.0,
+                            "dreamfusion": 1.0,
                         }
 
                         labels = {
                             "method-3dgs": "3DGS",
                             "mipgs": "Mip-Splatting",
-                            "zipnerf": "ZipNeRF (3-view)",
-                            "reconfusion": "ReconFusion (3-view)",
+                            "latent-nerf": "Latent-NeRF (Recon)",
+                            "feature_gs": "Feature-3DGS",
                             "method-3dgs-vae": "3DGS-VAE",
+                            "latent-nerf_": "Latent-NeRF (Gene)",
+                            "dreamfusion": "DreamFusion",
                         }
 
                         compareDiv = document.querySelector("#single-image-compare")
@@ -761,6 +790,10 @@
                 </div>
             </div>
 
+
+
+
+
             <br>
             <br>
             <br>
@@ -836,3 +869,4 @@
 </body>
 
 </html>
+
