@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Latent Radiance Fields with 3D-aware 2D Representations</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://latent-radiance-field.github.io/LRF/"/>
+    <meta property="og:title" content="Latent Radiance Fields with 3D-aware 2D Representations"/>
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Latent Radiance Fields with 3D-aware 2D Representations"/>
+    <meta name="twitter:image" content="https://latent-radiance-field.github.io/LRF/"/>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ZERS5BVPS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-8ZERS5BVPS');
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script defer src="js/fontawesome.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/synced_video_selector.js"></script>
+
+    <style>
+        .final-element {
+            white-space: nowrap;
+        }
+
+        }
+    </style>
+</head>
+
+<body style="padding: 5%; padding-top: min(15px, 5%); padding-bottom: min(5px, 5%); width: 100%">
+<div class="container-lg text-center" style="max-width: 1500px; margin: auto;" id="main">
+    <header role="banner">
+        <!-- <div class="container" id="main"> -->
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                <b>Latent Radiance Fields with 3D-aware 2D Representations</b>
+            </h2>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-3">
+            </div>
+            <div class="container-fluid text-center">
+                <ul class="list-inline" style="white-space: nowrap; margin:0px 0px 0px 0px;">
+                    <li><a style="font-size: calc(min(3vw, 15px))"
+                           href="https://chaoyizh.github.io/chaoyizh-home-page/">Chaoyi Zhou</a>
+                        <!--don't add a linebreak here! it adds a space!-->
+                        <div style="display: inline; font-family:verdana">*</div>
+                    </li>
+                    <li><a style="font-size: calc(min(3vw, 15px))" href="https://xiliu8006.github.io/">Xi Liu</a>
+                        <!--don't add a linebreak here! it adds a space!-->
+                        <div style="display: inline; font-family:verdana">*</div>
+                    </li>
+                    <li><a style="font-size: calc(min(3vw, 15px))"
+                           href="https://people.computing.clemson.edu/~luofeng/">Feng Luo</a></li>
+                    <li><a style="font-size: calc(min(3vw, 15px))" href="https://siyuhuang.github.io/">Siyu Huang</a>
+                        <div style="display: inline; font-family:verdana">†</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-12 text-center" style="font-size: calc(min(3vw, 15px))">
+                Clemson University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;<div
+                    style="display: inline; font-family:verdana; font-size: calc(min(3vw, 15px))">*
+            </div>
+                equal contribution<br>
+            </div>
+            <div class="col-md-12 text-center" style="font-size: calc(min(3vw, 15px))">
+                <b>ICLR 2025 </b>
+            </div>
+        </div>
+        <div class="row text-center">
+                <span class="link-block" style="padding-top: 10px; padding-bottom: 10px">
+                    <a href="https://openreview.net/pdf?id=vL9t9tpKli"
+                       class="external-link button is-normal is-rounded is-dark"
+                       style="width: 80px; font-size: 15px">
+                        <span class="icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                    </a>
+                    <a href="" class="external-link button is-normal is-rounded is-dark"
+                       style="width: 80px; font-size: 15px">
+                        <span class="icon">
+                            <i class="fab fa-github"></i>
+                        </span>
+                        <span>Code</span>
+                    </a>
+                </span>
+        </div>
+    </header>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <div class="row">
+        <!-- 放大图片：将原本的 col-md-8 改为 col-md-10，offset 从 md-2 改为 md-1 -->
+        <div class="col-md-8 offset-md-2">  <!-- 关键修改：扩大列宽度 -->
+            <figcaption class="text-justify margin-5" style="text-align: left;">
+                <h3 style="text-align: center;">
+                    We are the first one to achieve <font color="#924956"><b>3D latent reconstruction </b></font>
+                </h3>
+            </figcaption>
+            <!-- 图片添加自定义缩放样式 -->
+            <img
+                    width="100%"
+                    src="img/ours/LRF.png"
+                    alt="Method diagram"
+                    style="transform: scale(1.0); transform-origin: center;"
+            class="d-block mx-auto"
+            >
+
+
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <main role="main">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <video id="co3d-grid" poster="videos/ours/teaser/first_frame.png" width="100%" autoplay loop muted
+                       controls playsinline>
+                    <source src="videos/ours/teaser/final_combined_video_with_text.mp4" type="video/mp4"></source>
+
+                </video>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2 rounded"
+                 style="text-align: center; padding-bottom: 0px; padding-top: 5px; background-color: #d0d5ec;">
+                <h6 style="text-align: center; color:rgb(0, 0, 0)"><strong>TL;DR</strong>: Create 3D latent
+                    representation and render high-quality images.</h6>
+            </div>
+        </div>
+        <br><br>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3>
+                    Comparisons to other methods
+                </h3>
+
+                <p class="text-justify" style="text-align: left;">
+                    Compare the renders our method LRF (right) with baseline methods (left). Try selecting different
+                    methods and scenes!
+                </p>
+
+
+                <div id="single-image-compare">
+                    <div class="row m-2">
+                        <div class="col-md-10">
+                            <ul class="nav nav-pills justify-content-center" role="navigation">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+                                       style="width: 110px"><strong>Reconstrucion method:</strong></a>
+                                </li>
+                                <li class="nav-item method-pill" data-value="method-3dgs"><a class="nav-link active">3DGS
+                                    <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
+                                <li class="nav-item method-pill" data-value="mipgs"><a class="nav-link">Mip-Splatting
+                                    <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
+                                <li class="nav-item method-pill" data-value="method-3dgs-vae"><a class="nav-link">3DGS-VAE
+                                    <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                                <li class="nav-item method-pill" data-value="latent-nerf"><a class="nav-link">Latent-NeRF
+                                    (Recon) <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                                <li class="nav-item method-pill" data-value="feature_gs"><a class="nav-link">Feature-3DGS
+                                    <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                            </ul>
+                            <ul class="nav nav-pills justify-content-center" role="navigation">
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
+                                       style="width: 110px"><strong>Generation method:</strong></a>
+                                </li>
+                                <li class="nav-item method-pill" data-value="dreamfusion"><a class="nav-link">DreamFusion
+                                    <span style="font-size: 10px;"><br>(Image Space)</span></a></li>
+                                <li class="nav-item method-pill" data-value="latent-nerf_"><a class="nav-link">Latent-NeRF
+                                    (Gene) <span style="font-size: 10px;"><br>(Latent Space)</span></a></li>
+                            </ul>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="video-container container position-relative p-0 ">
+
+
+                        <video class="video col-6" id="single-comp-left" loop playsinline autoplay muted>
+                        </video>
+                        <video class="video col-6" id="single-comp-right" loop playsinline autoplay muted>
+                        </video>
+
+                        <div class="overlay position-absolute bg-dark top-0 start-0 text-white p-1 opacity-75"
+                             id="single-comp-label-left">Baseline
+                        </div>
+                        <div class="overlay position-absolute bg-dark top-0 start-50 text-white p-1 opacity-75"
+                             id="single-comp-label-right">Ours
+                        </div>
+
+                    </div>
+
+                    <div class="pill-row scene-pills" id="method-3dgs-pills" role="group"
+                         aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="tingzi">
+                            <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="chaoshi">
+                            <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="shibei">
+                            <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="tiantai">
+                            <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="baiqiang">
+                            <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fern">
+                            <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="flowers">
+                            <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fortress">
+                            <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="horns">
+                            <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="leaves">
+                            <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="bonsai">
+                            <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="kitchen">
+                            <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="counter">
+                            <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="garden">
+                            <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0000c3b1">
+                            <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="00000ffa">
+                            <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0001051b">
+                            <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
+                        </div>
+
+
+                    </div>
+
+                    <div class="pill-row scene-pills" id="mipgs-pills" role="group" aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="tingzi">
+                            <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="chaoshi">
+                            <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="shibei">
+                            <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="tiantai">
+                            <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="baiqiang">
+                            <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fern">
+                            <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="flowers">
+                            <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fortress">
+                            <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="horns">
+                            <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="leaves">
+                            <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="bonsai">
+                            <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="kitchen">
+                            <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="counter">
+                            <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="garden">
+                            <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0000c3b1">
+                            <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="00000ffa">
+                            <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0001051b">
+                            <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
+                        </div>
+
+
+                    </div>
+
+                    <div class="pill-row scene-pills" id="latent-nerf-pills" role="group"
+                         aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="tingzi">
+                            <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="chaoshi">
+                            <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="shibei">
+                            <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="tiantai">
+                            <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="baiqiang">
+                            <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fern">
+                            <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="flowers">
+                            <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fortress">
+                            <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="horns">
+                            <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="leaves">
+                            <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="bonsai">
+                            <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="kitchen">
+                            <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="counter">
+                            <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="garden">
+                            <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0000c3b1">
+                            <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="00000ffa">
+                            <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0001051b">
+                            <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
+                        </div>
+
+                    </div>
+
+                    <div class="pill-row scene-pills" id="feature_gs-pills" role="group" aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="tingzi">
+                            <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="chaoshi">
+                            <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="shibei">
+                            <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="tiantai">
+                            <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="baiqiang">
+                            <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fern">
+                            <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="flowers">
+                            <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fortress">
+                            <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="horns">
+                            <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="leaves">
+                            <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="bonsai">
+                            <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="kitchen">
+                            <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="counter">
+                            <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="garden">
+                            <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0000c3b1">
+                            <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="00000ffa">
+                            <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0001051b">
+                            <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
+                        </div>
+
+
+                    </div>
+
+                    <div class="pill-row scene-pills" id="method-3dgs-vae-pills" role="group"
+                         aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="tingzi">
+                            <img class="card-img" src="thumbnails/method-3dgs/tingzi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="chaoshi">
+                            <img class="card-img" src="thumbnails/method-3dgs/chaoshi.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="shibei">
+                            <img class="card-img" src="thumbnails/method-3dgs/shibei.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="tiantai">
+                            <img class="card-img" src="thumbnails/method-3dgs/tiantai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="baiqiang">
+                            <img class="card-img" src="thumbnails/method-3dgs/baiqiang.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fern">
+                            <img class="card-img" src="thumbnails/method-3dgs/fern.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="flowers">
+                            <img class="card-img" src="thumbnails/method-3dgs/flowers.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="fortress">
+                            <img class="card-img" src="thumbnails/method-3dgs/fortress.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="horns">
+                            <img class="card-img" src="thumbnails/method-3dgs/horns.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="leaves">
+                            <img class="card-img" src="thumbnails/method-3dgs/leaves.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="bonsai">
+                            <img class="card-img" src="thumbnails/method-3dgs/bonsai.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="kitchen">
+                            <img class="card-img" src="thumbnails/method-3dgs/kitchen.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="counter">
+                            <img class="card-img" src="thumbnails/method-3dgs/counter.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="garden">
+                            <img class="card-img" src="thumbnails/method-3dgs/garden.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0000c3b1">
+                            <img class="card-img" src="thumbnails/method-3dgs/0000c3b1.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="00000ffa">
+                            <img class="card-img" src="thumbnails/method-3dgs/00000ffa.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="0001051b">
+                            <img class="card-img" src="thumbnails/method-3dgs/0001051b.png">
+                        </div>
+                    </div>
+
+                    <div class="pill-row scene-pills" id="dreamfusion-pills" role="group"
+                         aria-relevant="additions text">
+
+                        <div class="pill scene-pill" data-value="3">
+                            <img class="card-img" src="thumbnails/dreamfusion/3.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="5">
+                            <img class="card-img" src="thumbnails/dreamfusion/5.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="6">
+                            <img class="card-img" src="thumbnails/dreamfusion/6.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="7">
+                            <img class="card-img" src="thumbnails/dreamfusion/7.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="8">
+                            <img class="card-img" src="thumbnails/dreamfusion/8.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="10">
+                            <img class="card-img" src="thumbnails/dreamfusion/10.png">
+                        </div>
+
+
+                    </div>
+                    <div class="pill-row scene-pills" id="latent-nerf_-pills" role="group"
+                         aria-relevant="additions text">
+                        <div class="pill scene-pill" data-value="1">
+                            <img class="card-img" src="thumbnails/latent-nerf_/1.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="3">
+                            <img class="card-img" src="thumbnails/latent-nerf_/3.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="5">
+                            <img class="card-img" src="thumbnails/latent-nerf_/5.png">
+                        </div>
+                        <div class="pill scene-pill" data-value="6">
+                            <img class="card-img" src="thumbnails/latent-nerf_/6.png">
+                        </div>
+
+                        <div class="pill scene-pill" data-value="8">
+                            <img class="card-img" src="thumbnails/latent-nerf_/8.png">
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <script>
+                    playbackSpeeds = {
+                        "method-3dgs": [1.0, 1.0],
+                        "mipgs": [1.0, 1.0],
+                        "latent-nerf": [1.0, 1.0],
+                        "feature_gs": [1.0, 1.0],
+                        "method-3dgs-vae": [1.0, 1.0],
+                        "latent-nerf_": [1.0, 1.0],
+                        "dreamfusion": [1.0, 1.0],
+                    };
+
+                    aspectRatios = {
+                        "method-3dgs": 1.0,
+                        "mipgs": 1.0,
+                        "latent-nerf": 1.0,
+                        "feature_gs": 1.0,
+                        "method-3dgs-vae": 1.0,
+                        "latent-nerf_": 1.0,
+                        "dreamfusion": 1.0,
+                    }
+
+                    labels = {
+                        "method-3dgs": "3DGS",
+                        "mipgs": "Mip-Splatting",
+                        "latent-nerf": "Latent-NeRF (Recon)",
+                        "feature_gs": "Feature-3DGS",
+                        "method-3dgs-vae": "3DGS-VAE",
+                        "latent-nerf_": "Latent-NeRF (Gene)",
+                        "dreamfusion": "DreamFusion",
+                    }
+
+                    compareDiv = document.querySelector("#single-image-compare")
+                    activeMethod = "method-3dgs"
+                    activeScene = "tingzi"
+                    activeMode = "rgb"
+
+                    // Select all elements with the class 'method-pill'
+                    const methodPills = compareDiv.querySelectorAll('.method-pill');
+
+
+                    const videoParent = compareDiv.querySelector(".video-container");
+                    const leftVideo = videoParent.querySelector('#single-comp-left')
+                    const leftLabel = videoParent.querySelector("#single-comp-label-left")
+                    const rightVideo = videoParent.querySelector('#single-comp-right')
+                    const scenePillContainers = compareDiv.querySelectorAll(`.scene-pills`);
+
+                    for (methodPill of methodPills) {
+                        const method = methodPill.getAttribute('data-value');
+                        // Select all scene pill containers
+                        const scenePillContainer = compareDiv.querySelector(`#${method}-pills`);
+                        const scenePills = scenePillContainer.querySelectorAll(".scene-pill")
+
+                        for (scenePill of scenePills) {
+                            scenePill.addEventListener('click', function () {
+                                activeScene = this.getAttribute("data-value")
+                                console.log(activeScene);
+                                updateDisplay();
+                            });
+                        }
+
+                        // Attach a click event listener to each pill
+                        methodPill.addEventListener('click', function () {
+                            activeMethod = method
+                            activeMode = "rgb"
+                            const scenePillContainer = compareDiv.querySelector(`#${method}-pills`);
+                            const scenePills = scenePillContainer.querySelectorAll(".scene-pill")
+                            activeScene = scenePills[0].getAttribute("data-value")
+                            updateDisplay();
+                        });
+                    }
+
+                    function updateDisplay() {
+                        // if (activeMethod == 'image_dream') {
+                        //     modePillParent.style.display = 'none';
+                        // } else {
+                        //     modePillParent.style.display = '';
+                        // }
+                        // Update active pill
+
+                        methodPills.forEach(p => p.classList.remove('active'));
+                        methodPills.forEach(methodPill => {
+                            if (methodPill.getAttribute('data-value') == activeMethod) {
+                                methodPill.querySelector('a').classList.add('active');
+                            } else {
+                                methodPill.querySelector('a').classList.remove('active')
+                            }
+                        });
+
+                        // Update mode pill
+                        // for (modePill of modePills) {
+                        //     if (modePill.getAttribute('data-value') === activeMode) {
+                        //         modePill.classList.add('active');
+                        //     } else {
+                        //         modePill.classList.remove('active');
+                        //     }
+                        // }
+
+                        // Show/Hide scene pill containers based on the selected method
+                        scenePillContainers.forEach(container => {
+                            if (container.id === `${activeMethod}-pills`) {
+                                container.style.display = ''; // Or 'block' depending on your layout
+                            } else {
+                                container.style.display = 'none';
+                            }
+                        });
+
+                        const scenePillContainer = compareDiv.querySelector(`#${activeMethod}-pills`);
+                        const scenePills = scenePillContainer.querySelectorAll(".scene-pill")
+
+                        for (scenePill of scenePills) {
+                            if (scenePill.getAttribute('data-value') == activeScene) {
+                                scenePill.classList.add('active');
+                            } else {
+                                scenePill.classList.remove('active')
+                            }
+                        }
+
+                        var zdist = "";
+                        if (activeMode == "depth") {
+                            zdist = "_zdist";
+                        }
+
+
+                        // Update video display. This still has a small flash, could double buffer the video like before, but
+                        // as long as the layout stays consistent it really isn't bad.
+                        leftVideo.src = `videos/ours/comparison_recon/${activeMethod}/baseline/${activeScene}${zdist}.mp4`
+                        rightVideo.src = `videos/ours/comparison_recon/${activeMethod}/ours/${activeScene}${zdist}.mp4`
+
+                        var [lr, rr] = playbackSpeeds[activeMethod];
+                        leftVideo.playbackRate = lr;
+                        rightVideo.playbackRate = rr;
+
+                        videoParent.style.aspectRatio = aspectRatios[activeMethod] * 2.0;
+
+                        console.log(leftLabel)
+                        console.log(leftLabel.innerHtml)
+
+                        leftLabel.innerHTML = labels[activeMethod];
+                    }
+
+                    // Update initial display
+                    updateDisplay()
+                </script>
+            </div>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3> Method overview </h3>
+                <img width=100% src="img/ours/method.png"
+                     alt="A diagram explaining the method in broad strokes, like explained in the caption."></img>
+
+                <figcaption class="text-justify margin-5" style="text-align: left;">
+                    In this work, we propose a method to achieve <b>3D-aware 2D representations</b> and enable <b>3D
+                    reconstruction in the latent space</b>. To enhance the 3D awareness of both encoder and decoder of
+                    the VAE, we present a three-stage pipeline. The first stage focuses on improving the 3D awaresness
+                    of the VAE's encoder through a novel <font color="#E3B555"><b>correspondence-aware
+                    constraint</b></font> on the latent space, making the 2D representations follow the geometry
+                    consistency; The second stage builds a <font color="#5583A8"><b>latent radiance field
+                    (LRF)</b></font> to represent 3D scenes from the 3D-aware 2D representations; The third stage
+                    further introduces a <font color="#924956"><b>VAE-Radiance Field (VAE-RF) </b></font>alignment
+                    method to boost the reconstruction performance. In together, our LRF enables 3D reconstruction on
+                    the 2D latent space instead of the image space. It can render high-quality and photorealistic novel
+                    views, even for the unbounded scenes.
+                    <!--                    CAT3D uses a <b>multi-view latent diffusion model</b> to generate novel views of the scene. This model can be conditioned on any number of <font color="#5583A8"><b>observed views</b></font>  (input images with corresponding camera poses embedded as ray coordinates), and is trained to produce multiple consistent <font color="#E3B555"><b>novel images</b></font> of the scene at specified <font color="#924956"><b>target viewpoints</b></font>. This architecture is similar to video diffusion models, but with camera pose embeddings for each image instead of time embeddings. The generated views are passed into a robust 3D reconstruction pipeline to create the 3D representation (Zip-NeRF or 3DGS).-->
+                    </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-5 center text-start">
+                <label style="display: inline" for="bibtex">
+                    <h4 style="text-align: center">BibTeX </h4>
+                </label>
+                <textarea id="bibtex" class="form-control" readonly>
+TBD
+                        </textarea>
+            </div>
+        </div>
+
+
+    </main>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <footer>
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-start">
+
+                <p class="text-justify" style="text-align: left;">
+                    <i>
+                        The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>,
+                        <a href="https://dorverbin.github.io/refnerf">Ref-NeRF</a>, and <a
+                            href="https://reconfusion.github.io">ReconFusion</a>.
+                    </i>
+                </p>
+            </div>
+        </div>
+
+    </footer>
+
+</div>
+</body>
+
+</html>
+
