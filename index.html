@@ -140,43 +140,7 @@
 
 
         </header>
-         <br>
-            <br>
-            <br>
-            <br>
-
-        <div class="row">
-        <!-- 放大图片：将原本的 col-md-8 改为 col-md-10，offset 从 md-2 改为 md-1 -->
-        <div class="col-md-6 offset-md-3">  <!-- 关键修改：扩大列宽度 -->
-            <figcaption class="text-justify margin-5" style="text-align: left;">
-                <h3 style="text-align: center; font-size: 1.0rem;">
-                    For the first time, we achieve <font color="#924956"><b>3D latent reconstruction </b></font>
-                </h3>
-            </figcaption>
-            <!-- 图片添加自定义缩放样式 -->
-            <img
-                    width="100%"
-                    src="img/ours/LRF.png"
-                    alt="Method diagram"
-                    style="transform: scale(1.0); transform-origin: center;"
-            class="d-block mx-auto"
-            >
-            <figcaption class="text-justify margin-5" style="text-align: left;">
-                <h3 style="text-align: center; font-size: 1.0rem;">
-                    Achieve photorealistic 3D reconstruction on latent space
-                </h3>
-            </figcaption>
-
-
-        </div>
-    </div>
-        <br>
-            <br>
-            <br>
-            <br>
-
-        <main role="main">
-            <div class="row">
+         <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <video id="co3d-grid" poster="videos/ours/teaser/first_frame.png" width="100%" autoplay loop muted controls playsinline>
 					  <source src="videos/ours/teaser/final_combined_video_with_text.mp4" type="video/mp4"></source>
@@ -184,17 +148,61 @@
                     </video>
                 </div>
             </div>
-            <div class="row">
+        <div class="row">
                 <div class="col-md-8 offset-md-2 rounded" style="text-align: center; padding-bottom: 0px; padding-top: 5px; background-color: #d0d5ec;">
                     <h6 style="text-align: center; color:rgb(0, 0, 0)"><strong>TL;DR</strong>: Create 3D latent representation and render high-quality images.</h6>
                 </div>
-            </div><br><br>
+            </div>
+         <br>
+            <br>
+            <br>
+            <br>
+        <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h3> Method overview </h3>
+                    <img width=100% src="img/ours/method.png"
+                        alt="A diagram explaining the method in broad strokes, like explained in the caption."></img>
+
+                    <figcaption class="text-justify margin-5" style="text-align: left;">
+                        In this work, we propose a method to achieve <b>3D-aware 2D representations</b> and enable <b>3D reconstruction in the latent space</b>. To enhance the 3D awareness of both encoder and decoder of the VAE, we present a three-stage pipeline. The first stage focuses on improving the 3D awaresness of the VAE's encoder through a novel <font color="#E3B555"><b>correspondence-aware constraint</b></font> on the latent space, making the 2D representations follow the geometry consistency; The second stage builds a <font color="#5583A8"><b>latent radiance field (LRF)</b></font> to represent 3D scenes from the 3D-aware 2D representations; The third stage further introduces a <font color="#924956"><b>VAE-Radiance Field (VAE-RF) </b></font>alignment method to boost the reconstruction performance. In together, our LRF enables 3D reconstruction on the 2D latent space instead of the image space. It can render high-quality and photorealistic novel views, even for the unbounded scenes.
+<!--                    CAT3D uses a <b>multi-view latent diffusion model</b> to generate novel views of the scene. This model can be conditioned on any number of <font color="#5583A8"><b>observed views</b></font>  (input images with corresponding camera poses embedded as ray coordinates), and is trained to produce multiple consistent <font color="#E3B555"><b>novel images</b></font> of the scene at specified <font color="#924956"><b>target viewpoints</b></font>. This architecture is similar to video diffusion models, but with camera pose embeddings for each image instead of time embeddings. The generated views are passed into a robust 3D reconstruction pipeline to create the 3D representation (Zip-NeRF or 3DGS).-->
+                    </p>
+                </div>
+            </div>
+
+<!--        <div class="row">-->
+<!--        &lt;!&ndash; 放大图片：将原本的 col-md-8 改为 col-md-10，offset 从 md-2 改为 md-1 &ndash;&gt;-->
+<!--        <div class="col-md-6 offset-md-3">  &lt;!&ndash; 关键修改：扩大列宽度 &ndash;&gt;-->
+<!--            <figcaption class="text-justify margin-5" style="text-align: left;">-->
+<!--                <h3 style="text-align: center; font-size: 1.0rem;">-->
+<!--                    For the first time, we achieve <font color="#924956"><b>3D latent reconstruction </b></font>-->
+<!--                </h3>-->
+<!--            </figcaption>-->
+<!--            &lt;!&ndash; 图片添加自定义缩放样式 &ndash;&gt;-->
+<!--            <img-->
+<!--                    width="100%"-->
+<!--                    src="img/ours/LRF.png"-->
+<!--                    alt="Method diagram"-->
+<!--                    style="transform: scale(1.0); transform-origin: center;"-->
+<!--            class="d-block mx-auto"-->
+<!--            >-->
+<!--            <figcaption class="text-justify margin-5" style="text-align: left;">-->
+<!--                <h3 style="text-align: center; font-size: 1.0rem;">-->
+<!--                    Achieve photorealistic 3D reconstruction on latent space-->
+<!--                </h3>-->
+<!--            </figcaption>-->
 
 
+<!--        </div>-->
+<!--    </div>-->
+        <br>
             <br>
-            <br>
-            <br>
-            <br>
+
+
+        <main role="main">
+
+
+
 
 
 
